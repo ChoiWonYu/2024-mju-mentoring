@@ -17,6 +17,7 @@ import com.mju.mentoring.board.infrastructure.BoardFakeRepository;
 import com.mju.mentoring.board.infrastructure.MemoryViewCountManager;
 import com.mju.mentoring.member.application.member.MemberService;
 import com.mju.mentoring.member.domain.MemberRepository;
+import com.mju.mentoring.member.fake.FakeBoardHistoryRepository;
 import com.mju.mentoring.member.fake.FakeMemberRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +43,7 @@ class BoardServiceTest {
         memberRepository = new FakeMemberRepository();
         boardRepository = new BoardFakeRepository();
         viewCountManager = new MemoryViewCountManager();
-        memberService = new MemberService(memberRepository);
+        memberService = new MemberService(memberRepository, new FakeBoardHistoryRepository());
         boardService = new BoardService(memberService, boardRepository, viewCountManager);
     }
 

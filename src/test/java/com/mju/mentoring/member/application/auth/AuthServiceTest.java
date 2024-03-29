@@ -14,6 +14,7 @@ import com.mju.mentoring.member.exception.exceptions.DuplicateNicknameException;
 import com.mju.mentoring.member.exception.exceptions.DuplicateUsernameException;
 import com.mju.mentoring.member.exception.exceptions.MemberNotFoundException;
 import com.mju.mentoring.member.exception.exceptions.WrongPasswordException;
+import com.mju.mentoring.member.fake.FakeBoardHistoryRepository;
 import com.mju.mentoring.member.fake.FakeFixedTokenManager;
 import com.mju.mentoring.member.fake.FakeMemberRepository;
 import com.mju.mentoring.member.ui.auth.dto.TokenResponse;
@@ -39,7 +40,7 @@ class AuthServiceTest {
     void init() {
         memberRepository = new FakeMemberRepository();
         authService = new AuthService(memberRepository, new FakeFixedTokenManager(),
-            new MemberService(memberRepository));
+            new MemberService(memberRepository, new FakeBoardHistoryRepository()));
     }
 
     @Test
