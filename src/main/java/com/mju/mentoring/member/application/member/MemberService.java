@@ -1,10 +1,7 @@
 package com.mju.mentoring.member.application.member;
 
-import com.mju.mentoring.global.domain.HistoryType;
 import com.mju.mentoring.global.event.Events;
 import com.mju.mentoring.member.application.member.dto.ChangeNickNameRequest;
-import com.mju.mentoring.member.domain.BoardHistory;
-import com.mju.mentoring.member.domain.BoardHistoryRepository;
 import com.mju.mentoring.member.domain.Member;
 import com.mju.mentoring.member.domain.MemberNickNameChangedEvent;
 import com.mju.mentoring.member.domain.MemberRepository;
@@ -17,10 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final BoardHistoryRepository boardHistoryRepository;
 
     @Transactional
     public void changeNickName(final Long memberId, final ChangeNickNameRequest request) {
@@ -48,11 +45,5 @@ public class MemberService {
         if (memberRepository.existsByNickname(nickname)) {
             throw new DuplicateNicknameException();
         }
-    }
-
-    public void createBoardHistory(final Long memberId, final Long boardId,
-        final HistoryType historyType) {
-        BoardHistory boardHistory = BoardHistory.of(memberId, boardId, historyType);
-        boardHistoryRepository.save(boardHistory);
     }
 }

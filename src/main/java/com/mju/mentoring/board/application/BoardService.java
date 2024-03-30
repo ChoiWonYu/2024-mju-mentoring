@@ -1,11 +1,11 @@
 package com.mju.mentoring.board.application;
 
-import static com.mju.mentoring.global.domain.HistoryType.CREATE;
+import static com.mju.mentoring.global.domain.OperateType.CREATE;
 
 import com.mju.mentoring.board.application.dto.BoardDeleteRequest;
 import com.mju.mentoring.board.application.dto.BoardUpdateRequest;
 import com.mju.mentoring.board.domain.Board;
-import com.mju.mentoring.board.domain.BoardHistoryEvent;
+import com.mju.mentoring.board.domain.BoardOperateEvent;
 import com.mju.mentoring.board.domain.BoardRepository;
 import com.mju.mentoring.board.application.dto.BoardCreateRequest;
 import com.mju.mentoring.board.domain.Boards;
@@ -34,7 +34,7 @@ public class BoardService {
         Board board = Board.of(writer.getId(), writer.getNickname(), boardCreateRequest.title(),
             boardCreateRequest.content());
         Board savedBoard = boardRepository.save(board);
-        Events.raise(BoardHistoryEvent.of(writerId, savedBoard.getId(), CREATE));
+        Events.raise(BoardOperateEvent.of(writerId, savedBoard.getId(), CREATE));
 
         return savedBoard.getId();
     }
