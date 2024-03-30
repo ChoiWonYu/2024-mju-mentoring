@@ -1,6 +1,6 @@
 package com.mju.mentoring.global.domain;
 
-public enum HistoryType {
+public enum OperateType {
 
     CREATE,
     READ,
