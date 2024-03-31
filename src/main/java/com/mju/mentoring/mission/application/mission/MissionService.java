@@ -6,6 +6,7 @@ import com.mju.mentoring.global.event.Events;
 import com.mju.mentoring.mission.domain.mission.Mission;
 import com.mju.mentoring.mission.domain.mission.MissionFoundEvent;
 import com.mju.mentoring.mission.domain.mission.MissionRepository;
+import com.mju.mentoring.mission.exception.exceptions.NotFoundMissionException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,10 @@ public class MissionService {
         Events.raise(new MissionFoundEvent(mission.getId(), challengerId));
     }
 
-    public void challengeMission() {
-
+    public void challengeMission(final Long challengerId, final Long missionId) {
+        Optional<Mission> mission = missionRepository.findById(missionId);
+        if (mission.isEmpty()) {
+            throw new NotFoundMissionException(missionId);
+        }
     }
 }
