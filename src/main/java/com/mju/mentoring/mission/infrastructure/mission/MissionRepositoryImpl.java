@@ -26,6 +26,11 @@ public class MissionRepositoryImpl implements MissionRepository {
     }
 
     @Override
+    public Optional<Mission> findById(final Long id) {
+        return missionJpaRepository.findById(id);
+    }
+
+    @Override
     public Optional<Mission> findByOperateTypeAndResourceType(final OperateType operateType,
         final ResourceType resourceType) {
         return missionJpaRepository.findByOperateTypeAndTargetType(operateType, resourceType);

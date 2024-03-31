@@ -11,6 +11,8 @@ public interface MissionJpaRepository extends JpaRepository<Mission, Long> {
 
     Mission save(final Mission mission);
 
+    Optional<Mission> findById(final Long id);
+
     List<Mission> findAll();
 
     Optional<Mission> findByOperateTypeAndTargetType(

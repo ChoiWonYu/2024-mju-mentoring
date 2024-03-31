@@ -14,8 +14,9 @@ public class FakeMissionRepository implements MissionRepository {
     Map<Long, Mission> db = new HashMap<>();
     private Long id = 1L;
 
+    @Override
     public Mission save(final Mission mission) {
-        Mission saveMission = mission.builder()
+        Mission saveMission = Mission.builder()
             .id(id)
             .title(mission.getTitle())
             .reward(mission.getReward())
@@ -30,6 +31,14 @@ public class FakeMissionRepository implements MissionRepository {
     @Override
     public List<Mission> findAll() {
         return db.values().stream().toList();
+    }
+
+    @Override
+    public Optional<Mission> findById(final Long id) {
+        return db.keySet().stream()
+            .filter(key -> key.equals(id))
+            .findAny()
+            .map(db::get);
     }
 
     @Override

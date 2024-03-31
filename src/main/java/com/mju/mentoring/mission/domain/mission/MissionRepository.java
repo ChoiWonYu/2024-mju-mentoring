@@ -11,6 +11,8 @@ public interface MissionRepository {
 
     List<Mission> findAll();
 
+    Optional<Mission> findById(final Long id);
+
     Optional<Mission> findByOperateTypeAndResourceType(
         final OperateType operateType, final ResourceType resourceType);
 }
