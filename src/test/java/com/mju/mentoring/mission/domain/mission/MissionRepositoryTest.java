@@ -41,7 +41,7 @@ class MissionRepositoryTest {
     }
 
     @Test
-    void 미션_단건_조회_테스트() {
+    void 미션_조건_조회_테스트() {
         // given
         Mission mission = MissionFixture.id_없는_미션_생성();
 
@@ -56,6 +56,25 @@ class MissionRepositoryTest {
                 .isNotEmpty();
 
             softly.assertThat(targetMission.get())
+                .usingRecursiveComparison()
+                .ignoringFields("id")
+                .isEqualTo(mission);
+        });
+    }
+
+    @Test
+    void 미션_단건_조회_테스트() {
+        // given
+        Mission mission = MissionFixture.id_없는_미션_생성();
+
+        // when
+        missionRepository.save(mission);
+        Optional<Mission> findMission = missionRepository.findById(1L);
+
+        // then
+        assertSoftly(softly->{
+            softly.assertThat(findMission).isNotEmpty();
+            softly.assertThat(findMission.get())
                 .usingRecursiveComparison()
                 .ignoringFields("id")
                 .isEqualTo(mission);
