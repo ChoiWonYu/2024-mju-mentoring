@@ -6,6 +6,7 @@ import com.mju.mentoring.global.event.Events;
 import com.mju.mentoring.mission.domain.mission.Mission;
 import com.mju.mentoring.mission.domain.mission.MissionFoundEvent;
 import com.mju.mentoring.mission.domain.mission.MissionRepository;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ public class MissionService {
 
     private final MissionRepository missionRepository;
 
-    public void findAllMission() {
-
+    public List<Mission> findAll() {
+        return missionRepository.findAll();
     }
 
     public void findTargetMission(final Long challengerId, final OperateType operateType,
