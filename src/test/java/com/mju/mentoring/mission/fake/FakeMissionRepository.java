@@ -14,15 +14,17 @@ public class FakeMissionRepository implements MissionRepository {
     Map<Long, Mission> db = new HashMap<>();
     private Long id = 1L;
 
-    public void save(final Mission mission) {
-        db.put(id, mission.builder()
-            .id(id++)
+    public Mission save(final Mission mission) {
+        Mission saveMission = mission.builder()
+            .id(id)
             .title(mission.getTitle())
             .reward(mission.getReward())
             .goal(mission.getGoal())
             .targetType(mission.getTargetType())
             .operateType(mission.getOperateType())
-            .build());
+            .build();
+        db.put(id++, saveMission);
+        return saveMission;
     }
 
     @Override

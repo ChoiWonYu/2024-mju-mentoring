@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface MissionRepository {
 
+    Mission save(final Mission mission);
+
     List<Mission> findAll();
 
     Optional<Mission> findByOperateTypeAndResourceType(
