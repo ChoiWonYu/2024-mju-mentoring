@@ -1,6 +1,7 @@
 package com.mju.mentoring.mission.ui.mission;
 
 import static com.mju.mentoring.member.fixture.MemberFixture.id_없는_멤버_생성;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.mju.mentoring.global.BaseAcceptanceTest;
@@ -59,6 +60,20 @@ public class MissionAcceptanceTestFixture extends BaseAcceptanceTest {
             softly.assertThat(missions.size())
                 .isEqualTo(1);
         });
+    }
+
+    protected ExtractableResponse 미션을_신청한다(final String token, final String url) {
+        return RestAssured.given().log().all()
+            .header(HEADER_NAME, AUTHORIZATION_PREFIX + token)
+            .when()
+            .post(url)
+            .then().log().all()
+            .extract();
+    }
+
+    protected void 미션_신청_예외_검증(final ExtractableResponse response) {
+        int code = response.statusCode();
+        assertThat(code).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
     private void 미션_검증(final MissionResponse result, final Mission mission) {

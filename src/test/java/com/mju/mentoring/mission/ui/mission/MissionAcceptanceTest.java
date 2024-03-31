@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 public class MissionAcceptanceTest extends MissionAcceptanceTestFixture {
 
     private static final String 미션_전체_조회_url = "/missions";
+    private static final String 미션_신청_url = "/missions/1";
 
     private Mission 미션;
     private String 토큰;
@@ -30,5 +31,17 @@ public class MissionAcceptanceTest extends MissionAcceptanceTestFixture {
 
         // then
         여러_미션_검증(조회_결과, 저장_미션);
+    }
+
+    @Test
+    void 없는_미션_신청시_예외처리_테스트() {
+        // given
+        도전자를_생성한다();
+
+        // when
+        var 신청_결과 = 미션을_신청한다(토큰, 미션_신청_url);
+
+        // then
+        미션_신청_예외_검증(신청_결과);
     }
 }
