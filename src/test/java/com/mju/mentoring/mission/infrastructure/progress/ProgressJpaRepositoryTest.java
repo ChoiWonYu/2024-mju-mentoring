@@ -1,0 +1,36 @@
+package com.mju.mentoring.mission.infrastructure.progress;
+
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+
+import com.mju.mentoring.global.DatabaseCleaner;
+import com.mju.mentoring.mission.domain.progress.MissionProgress;
+import java.util.Optional;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+@DataJpaTest
+@DatabaseCleaner
+class ProgressJpaRepositoryTest {
+
+    @Autowired
+    private ProgressJpaRepository progressJpaRepository;
+
+    @Test
+    void 미션_id와_도전자_id로_진행도_조회_테스트() {
+        // given
+        progressJpaRepository.save(MissionProgress.of(1L, 1L, 1L));
+
+        // when
+        Optional<MissionProgress> progress = progressJpaRepository.findByMissionIdAndChallengerId(
+            1L, 1L);
+
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(progress).isNotEmpty();
+            softly.assertThat(progress.get().getChallengerId()).isEqualTo(1L);
+            softly.assertThat(progress.get().getMissionId()).isEqualTo(1L);
+        });
+    }
+
+}
