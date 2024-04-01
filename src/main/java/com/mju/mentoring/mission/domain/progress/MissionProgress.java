@@ -1,10 +1,15 @@
 package com.mju.mentoring.mission.domain.progress;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
+@AllArgsConstructor
 public class MissionProgress {
 
+    private Long id;
     private CurrentInfo currentInfo;
     private Long missionId;
     private Long challengerId;
