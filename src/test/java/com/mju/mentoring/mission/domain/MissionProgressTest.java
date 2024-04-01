@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.mju.mentoring.global.domain.OperateType;
-import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
 import com.mju.mentoring.mission.domain.progress.RewardStatus;
 import com.mju.mentoring.mission.exception.exceptions.CannotReceiveRewardException;
@@ -15,7 +13,6 @@ import org.junit.jupiter.api.Test;
 class MissionProgressTest {
 
     private static final Long DEFAULT_GOAL = 5L;
-    private static final Long DEFAULT_TARGET_ID = 1L;
     private static final Long DEFAULT_MISSION_ID = 1L;
     private static final Long DEFAULT_CHALLENGER_ID = 1L;
 
@@ -102,7 +99,6 @@ class MissionProgressTest {
     }
 
     private static MissionProgress createDefaultProgress() {
-        return MissionProgress.of(OperateType.CREATE, ResourceType.BOARD,
-            DEFAULT_TARGET_ID, DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_CHALLENGER_ID);
+        return MissionProgress.of(DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_CHALLENGER_ID);
     }
 }
