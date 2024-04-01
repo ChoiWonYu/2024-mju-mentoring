@@ -1,17 +1,34 @@
 package com.mju.mentoring.mission.domain.progress;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
+@Entity
 @AllArgsConstructor
+@NoArgsConstructor
 public class MissionProgress {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Embedded
     private CurrentInfo currentInfo;
+
+    @Column
     private Long missionId;
+
+    @Column
     private Long challengerId;
 
     private MissionProgress(final CurrentInfo currentInfo, final Long missionId,
@@ -21,7 +38,8 @@ public class MissionProgress {
         this.challengerId = challengerId;
     }
 
-    public static MissionProgress of(final Long goal, final Long missionId, final Long challengerId) {
+    public static MissionProgress of(final Long goal, final Long missionId,
+        final Long challengerId) {
         return new MissionProgress(CurrentInfo.initProgressInfo(goal), missionId, challengerId);
     }
 
