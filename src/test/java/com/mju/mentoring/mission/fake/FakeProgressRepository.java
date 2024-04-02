@@ -1,5 +1,7 @@
 package com.mju.mentoring.mission.fake;
 
+import com.mju.mentoring.global.domain.OperateType;
+import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
 import com.mju.mentoring.mission.domain.progress.ProgressRepository;
 import java.util.HashMap;
@@ -39,5 +41,11 @@ public class FakeProgressRepository implements ProgressRepository {
             .filter(progress -> progress.getMissionId().equals(missionId) &&
                 progress.getChallengerId().equals(challengerId))
             .findAny();
+    }
+
+    @Override
+    public Optional<MissionProgress> findByChallengeIdAndType(final Long challengerId,
+        final OperateType getOperateType, final ResourceType resourceType) {
+        return Optional.empty();
     }
 }
