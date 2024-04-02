@@ -11,6 +11,11 @@ spring:
     scheduling:
       pool:
         size: 10
+  jpa:
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
 
 auth:
   jwt:
