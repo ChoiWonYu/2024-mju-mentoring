@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ChallengeMissionEvent extends Event {
+public class ChallengedMissionEvent extends Event {
 
     private final Long challengerId;
     private final Long missionId;

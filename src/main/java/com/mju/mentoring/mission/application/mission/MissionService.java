@@ -1,7 +1,7 @@
 package com.mju.mentoring.mission.application.mission;
 
 import com.mju.mentoring.global.event.Events;
-import com.mju.mentoring.mission.domain.mission.ChallengeMissionEvent;
+import com.mju.mentoring.mission.domain.mission.ChallengedMissionEvent;
 import com.mju.mentoring.mission.domain.mission.Mission;
 import com.mju.mentoring.mission.domain.mission.MissionRepository;
 import com.mju.mentoring.mission.exception.exceptions.NotFoundMissionException;
@@ -24,7 +24,7 @@ public class MissionService {
     public void challengeMission(final Long challengerId, final Long missionId) {
         missionRepository.findById(missionId)
             .ifPresentOrElse(mission -> Events.raise(
-                    new ChallengeMissionEvent(challengerId, missionId, mission.getGoal())),
+                    new ChallengedMissionEvent(challengerId, missionId, mission.getGoal())),
                 () -> {
                     throw new NotFoundMissionException(missionId);
                 });

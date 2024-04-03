@@ -1,7 +1,7 @@
 package com.mju.mentoring.mission.application.progress;
 
 import com.mju.mentoring.board.domain.BoardOperateEvent;
-import com.mju.mentoring.mission.domain.mission.ChallengeMissionEvent;
+import com.mju.mentoring.mission.domain.mission.ChallengedMissionEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -17,7 +17,7 @@ public class ProgressEventHandler {
 
     @EventListener
     @Async
-    public void challengeMission(final ChallengeMissionEvent event) {
+    public void challengeMission(final ChallengedMissionEvent event) {
         progressService.challengeMission(
             event.getChallengerId(), event.getMissionId(), event.getGoal());
     }
