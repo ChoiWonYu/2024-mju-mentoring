@@ -3,32 +3,32 @@ package com.mju.mentoring.mission.infrastructure.progress;
 import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
-import com.mju.mentoring.mission.domain.progress.ProgressRepository;
+import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ProgressRepositoryImpl implements ProgressRepository {
+public class MissionProgressRepositoryImpl implements MissionProgressRepository {
 
-    private final ProgressJpaRepository progressJpaRepository;
-    private final ProgressQueryDslRepository queryDslRepository;
+    private final MissionProgressJpaRepository missionProgressJpaRepository;
+    private final MissionProgressQueryDslRepository queryDslRepository;
 
     @Override
     public Optional<MissionProgress> findById(final Long id) {
-        return progressJpaRepository.findById(id);
+        return missionProgressJpaRepository.findById(id);
     }
 
     @Override
     public MissionProgress save(final MissionProgress missionProgress) {
-        return progressJpaRepository.save(missionProgress);
+        return missionProgressJpaRepository.save(missionProgress);
     }
 
     @Override
     public Optional<MissionProgress> findByMissionIdAndChallengerId(final Long missionId,
         final Long challengerId) {
-        return progressJpaRepository.findByMissionIdAndChallengerId(missionId, challengerId);
+        return missionProgressJpaRepository.findByMissionIdAndChallengerId(missionId, challengerId);
     }
 
     @Override

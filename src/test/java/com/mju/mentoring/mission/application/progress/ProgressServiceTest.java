@@ -7,9 +7,9 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
-import com.mju.mentoring.mission.domain.progress.ProgressRepository;
+import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
 import com.mju.mentoring.mission.exception.exceptions.AlreadyChallengeMission;
-import com.mju.mentoring.mission.fake.FakeProgressRepository;
+import com.mju.mentoring.mission.fake.FakeMissionProgressRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,12 +23,12 @@ class ProgressServiceTest {
     private static final Long DEFAULT_GOAL = 5L;
 
     private ProgressService progressService;
-    private ProgressRepository progressRepository;
+    private MissionProgressRepository missionProgressRepository;
 
     @BeforeEach
     void setUp() {
-        progressRepository = new FakeProgressRepository();
-        progressService = new ProgressService(progressRepository);
+        missionProgressRepository = new FakeMissionProgressRepository();
+        progressService = new ProgressService(missionProgressRepository);
     }
 
     @Test
@@ -37,7 +37,7 @@ class ProgressServiceTest {
 
         // when
         progressService.challengeMission(DEFAULT_CHALLENGER_ID, DEFAULT_MISSION_ID, DEFAULT_GOAL);
-        Optional<MissionProgress> progress = progressRepository.findById(1L);
+        Optional<MissionProgress> progress = missionProgressRepository.findById(1L);
 
         // then
         assertThat(progress).isNotEmpty();

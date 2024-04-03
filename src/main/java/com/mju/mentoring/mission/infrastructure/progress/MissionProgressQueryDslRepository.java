@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ProgressQueryDslRepository {
+public class MissionProgressQueryDslRepository {
 
     private final JPAQueryFactory queryFactory;
 

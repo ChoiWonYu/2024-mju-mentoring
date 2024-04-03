@@ -3,12 +3,12 @@ package com.mju.mentoring.mission.fake;
 import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
-import com.mju.mentoring.mission.domain.progress.ProgressRepository;
+import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class FakeProgressRepository implements ProgressRepository {
+public class FakeMissionProgressRepository implements MissionProgressRepository {
 
     private Map<Long, MissionProgress> db = new HashMap<>();
     private Long id = 1L;

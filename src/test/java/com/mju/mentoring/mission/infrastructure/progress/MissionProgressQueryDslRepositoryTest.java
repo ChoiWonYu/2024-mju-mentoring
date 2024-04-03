@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Import;
 @DataJpaTest
 @DatabaseCleaner
 @Import(TestQuerydslConfig.class)
-class ProgressQueryDslRepositoryTest {
+class MissionProgressQueryDslRepositoryTest {
 
     private final static Long DEFAULT_MISSION_ID = 1L;
     private final static Long DEFAULT_CHALLENGER_ID = 1L;
@@ -30,16 +30,16 @@ class ProgressQueryDslRepositoryTest {
     private MissionJpaRepository missionRepository;
 
     @Autowired
-    private ProgressJpaRepository progressJpaRepository;
+    private MissionProgressJpaRepository missionProgressJpaRepository;
 
     @Autowired
-    private ProgressQueryDslRepository queryDslRepository;
+    private MissionProgressQueryDslRepository queryDslRepository;
 
     @Test
-    void when_() {
+    void 도전자와_미션_타입으로_미션_진행도_조회_테스트() {
         // given
         missionRepository.save(id_없는_미션_생성());
-        progressJpaRepository.save(
+        missionProgressJpaRepository.save(
             MissionProgress.of(DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_CHALLENGER_ID));
 
         // when

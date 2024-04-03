@@ -4,7 +4,7 @@ import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
 import java.util.Optional;
 
-public interface ProgressRepository {
+public interface MissionProgressRepository {
 
     Optional<MissionProgress> findById(final Long id);
 
