@@ -11,6 +11,11 @@ spring:
     scheduling:
       pool:
         size: 10
+    execution:
+      pool:
+        core-size: 8
+        max-size: 50
+        queue-capacity: 8
   jpa:
     defer-datasource-initialization: true
   sql:
