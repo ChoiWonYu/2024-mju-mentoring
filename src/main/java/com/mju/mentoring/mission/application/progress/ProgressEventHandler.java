@@ -16,7 +16,6 @@ public class ProgressEventHandler {
     private final ProgressService progressService;
 
     @EventListener
-    @Async
     public void challengeMission(final ChallengedMissionEvent event) {
         progressService.challengeMission(
             event.getChallengerId(), event.getMissionId(), event.getGoal());
