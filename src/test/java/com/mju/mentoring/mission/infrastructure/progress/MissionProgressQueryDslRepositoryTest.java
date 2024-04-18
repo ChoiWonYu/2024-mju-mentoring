@@ -2,6 +2,7 @@ package com.mju.mentoring.mission.infrastructure.progress;
 
 import static com.mju.mentoring.mission.fixture.MissionFixture.id_없는_미션_생성;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.mju.mentoring.global.DatabaseCleaner;
 import com.mju.mentoring.global.config.TestQuerydslConfig;
@@ -48,5 +49,22 @@ class MissionProgressQueryDslRepositoryTest {
 
         // then
         assertThat(progress).isNotEmpty();
+    }
+
+    @Test
+    void 도전자가_이미_미션을_수행하고_있는지_조회_테스트() {
+        // given
+        missionProgressJpaRepository.save(
+            MissionProgress.of(DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_CHALLENGER_ID));
+
+        // when & then
+        assertSoftly(softly -> {
+            softly.assertThat(queryDslRepository.hasAlreadyChallengedMission(
+                    DEFAULT_CHALLENGER_ID, DEFAULT_MISSION_ID))
+                .isTrue();
+            softly.assertThat(queryDslRepository.hasAlreadyChallengedMission(
+                    2L, 2L))
+                .isFalse();
+        });
     }
 }

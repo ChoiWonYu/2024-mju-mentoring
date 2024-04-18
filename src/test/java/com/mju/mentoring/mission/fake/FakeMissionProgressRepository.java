@@ -48,4 +48,13 @@ public class FakeMissionProgressRepository implements MissionProgressRepository 
         final OperateType getOperateType, final ResourceType resourceType) {
         return Optional.empty();
     }
+
+    @Override
+    public boolean hasChallengedMission(final Long challengerId, final Long missionId) {
+        return db.keySet().stream()
+            .map(key -> db.get(key))
+            .anyMatch(
+                progress -> progress.getMissionId().equals(missionId)
+                        && progress.getChallengerId().equals(challengerId));
+    }
 }
