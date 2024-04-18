@@ -26,4 +26,14 @@ public class MissionProgressQueryDslRepository {
             .where(missionProgress.challengerId.eq(challengerId))
             .fetchFirst());
     }
+
+    public boolean hasAlreadyChallengedMission(final Long challengerId, final Long missionId) {
+        return queryFactory.selectOne()
+            .from(missionProgress)
+            .where(
+                missionProgress.challengerId.eq(challengerId),
+                missionProgress.missionId.eq(missionId)
+            )
+            .fetchFirst() != null;
+    }
 }

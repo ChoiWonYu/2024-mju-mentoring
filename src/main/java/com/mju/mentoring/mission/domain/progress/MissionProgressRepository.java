@@ -15,4 +15,6 @@ public interface MissionProgressRepository {
 
     Optional<MissionProgress> findByChallengeIdAndType(final Long challengerId,
         final OperateType getOperateType, final ResourceType resourceType);
+
+    boolean hasChallengedMission(final Long challengerId, final Long missionId);
 }

@@ -36,4 +36,9 @@ public class MissionProgressRepositoryImpl implements MissionProgressRepository 
         final OperateType operateType, final ResourceType resourceType) {
         return queryDslRepository.findByChallengeIdAndType(challengerId, operateType, resourceType);
     }
+
+    @Override
+    public boolean hasChallengedMission(final Long challengerId, final Long missionId) {
+        return queryDslRepository.hasAlreadyChallengedMission(challengerId, missionId);
+    }
 }

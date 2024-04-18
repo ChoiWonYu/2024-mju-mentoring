@@ -18,10 +18,7 @@ public class ProgressService {
 
     @Transactional
     public void challengeMission(final Long challengerId, final Long missionId, final Long goal) {
-        Optional<MissionProgress> missionProgress = missionProgressRepository.findByMissionIdAndChallengerId(
-            challengerId, missionId);
-
-        if (!missionProgress.isEmpty()) {
+        if(missionProgressRepository.hasChallengedMission(challengerId, missionId)){
             throw new AlreadyChallengeMission();
         }
 
