@@ -37,7 +37,7 @@ public class CurrentInfo {
     }
 
     public boolean canReceiveReward() {
-        return rewardStatus.canReceive();
+        return progressInfo.isSatisfiedGoal() && rewardStatus.canReceive();
     }
 
     public void increaseCount() {
