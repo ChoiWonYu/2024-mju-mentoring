@@ -1,6 +1,7 @@
 package com.mju.mentoring.global.config;
 
 import com.mju.mentoring.board.infrastructure.BoardQueryDslRepository;
+import com.mju.mentoring.mission.infrastructure.progress.MissionProgressQueryDslRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -21,5 +22,10 @@ public class TestQuerydslConfig {
     @Bean
     public BoardQueryDslRepository boardQueryDslRepository() {
         return new BoardQueryDslRepository(jpaQueryFactory());
+    }
+
+    @Bean
+    public MissionProgressQueryDslRepository progressQueryDslRepository() {
+        return new MissionProgressQueryDslRepository(jpaQueryFactory());
     }
 }
