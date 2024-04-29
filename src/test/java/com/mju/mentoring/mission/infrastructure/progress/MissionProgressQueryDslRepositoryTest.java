@@ -1,6 +1,14 @@
 package com.mju.mentoring.mission.infrastructure.progress;
 
+import static com.mju.mentoring.mission.domain.progress.ProgressStatus.COMPLETED;
+import static com.mju.mentoring.mission.domain.progress.ProgressStatus.IN_PROGRESS;
+import static com.mju.mentoring.mission.domain.progress.RewardStatus.RECEIVED;
+import static com.mju.mentoring.mission.domain.progress.RewardStatus.WAITING;
 import static com.mju.mentoring.mission.fixture.MissionFixture.id_없는_미션_생성;
+import static com.mju.mentoring.mission.fixture.ProgressFixture.id_없는_보상_수령_가능한_진행도_생성;
+import static com.mju.mentoring.mission.fixture.ProgressFixture.id_없는_보상_수령한_진행도_생성;
+import static com.mju.mentoring.mission.fixture.ProgressFixture.id_없는_완료된_진행도_생성;
+import static com.mju.mentoring.mission.fixture.ProgressFixture.id_없는_진행중인_진행도_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -87,9 +95,61 @@ class MissionProgressQueryDslRepositoryTest {
             MissionProgress.of(DEFAULT_GOAL, 2L, DEFAULT_CHALLENGER_ID));
 
         // when
-        List<CurrentProgress> progress = queryDslRepository.findAll();
+        List<CurrentProgress> progress = queryDslRepository.findAll(null, null);
 
         // then
         assertThat(progress.size()).isEqualTo(2);
+    }
+
+    @Test
+    void 완료된_미션_조회_테스트() {
+        // given
+        missionRepository.save(id_없는_미션_생성());
+        missionProgressJpaRepository.save(id_없는_완료된_진행도_생성());
+
+        // when
+        List<CurrentProgress> progress = queryDslRepository.findAll(COMPLETED, null);
+
+        // then
+        assertThat(progress.isEmpty()).isFalse();
+    }
+
+    @Test
+    void 진행중인_미션_조회_테스트() {
+        // given
+        missionRepository.save(id_없는_미션_생성());
+        missionProgressJpaRepository.save(id_없는_진행중인_진행도_생성());
+
+        // when
+        List<CurrentProgress> progress = queryDslRepository.findAll(IN_PROGRESS, null);
+
+        // then
+        assertThat(progress.isEmpty()).isFalse();
+    }
+
+    @Test
+    void 보상_수령_가능한_미션_조회_테스트() {
+        // given
+        missionRepository.save(id_없는_미션_생성());
+        missionProgressJpaRepository.save(id_없는_보상_수령_가능한_진행도_생성());
+
+        // when
+        List<CurrentProgress> progress = queryDslRepository.findAll(null, WAITING);
+
+        // then
+        assertThat(progress.isEmpty()).isFalse();
+    }
+
+    @Test
+    void 보상_수령한_미션_조회_테스트() {
+        // given
+        missionRepository.save(id_없는_미션_생성());
+        missionProgressJpaRepository.save(id_없는_보상_수령한_진행도_생성());
+
+        // when
+        List<CurrentProgress> progress = queryDslRepository.findAll(null, RECEIVED);
+
+        // then
+        assertThat(progress.isEmpty()).isFalse();
     }
 }
