@@ -4,6 +4,8 @@ import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
 import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
+import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,11 @@ public class MissionProgressRepositoryImpl implements MissionProgressRepository 
 
     private final MissionProgressJpaRepository missionProgressJpaRepository;
     private final MissionProgressQueryDslRepository queryDslRepository;
+
+    @Override
+    public List<CurrentProgress> findAll() {
+        return queryDslRepository.findAll();
+    }
 
     @Override
     public Optional<MissionProgress> findById(final Long id) {

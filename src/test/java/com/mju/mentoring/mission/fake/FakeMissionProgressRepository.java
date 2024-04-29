@@ -4,7 +4,9 @@ import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
 import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
+import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -12,6 +14,11 @@ public class FakeMissionProgressRepository implements MissionProgressRepository 
 
     private Map<Long, MissionProgress> db = new HashMap<>();
     private Long id = 1L;
+
+    @Override
+    public List<CurrentProgress> findAll() {
+        return null;
+    }
 
     @Override
     public Optional<MissionProgress> findById(final Long id) {

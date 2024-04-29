@@ -6,7 +6,10 @@ import static com.mju.mentoring.mission.domain.progress.QMissionProgress.mission
 import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
+import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -35,5 +38,20 @@ public class MissionProgressQueryDslRepository {
                 missionProgress.missionId.eq(missionId)
             )
             .fetchFirst() != null;
+    }
+
+    public List<CurrentProgress> findAll() {
+        return queryFactory.select(Projections.constructor(
+                CurrentProgress.class,
+                mission.title,
+                missionProgress.currentInfo.currentCount,
+                missionProgress.currentInfo.progressInfo.goal,
+                missionProgress.currentInfo.progressInfo.progress
+            ))
+            .from(missionProgress)
+            .innerJoin(mission)
+            .on(missionProgress.missionId.eq(mission.id))
+            .fetchJoin()
+            .fetch();
     }
 }

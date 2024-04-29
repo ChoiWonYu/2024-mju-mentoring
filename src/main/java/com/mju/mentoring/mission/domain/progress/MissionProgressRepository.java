@@ -2,9 +2,13 @@ package com.mju.mentoring.mission.domain.progress;
 
 import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
+import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
+import java.util.List;
 import java.util.Optional;
 
 public interface MissionProgressRepository {
+
+    List<CurrentProgress> findAll();
 
     Optional<MissionProgress> findById(final Long id);
 
