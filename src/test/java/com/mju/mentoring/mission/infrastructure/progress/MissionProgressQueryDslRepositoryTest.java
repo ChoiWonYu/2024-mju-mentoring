@@ -8,8 +8,11 @@ import com.mju.mentoring.global.DatabaseCleaner;
 import com.mju.mentoring.global.config.TestQuerydslConfig;
 import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
+import com.mju.mentoring.mission.domain.mission.Mission;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
 import com.mju.mentoring.mission.infrastructure.mission.MissionJpaRepository;
+import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +69,27 @@ class MissionProgressQueryDslRepositoryTest {
                     2L, 2L))
                 .isFalse();
         });
+    }
+
+    @Test
+    void 미션_전체_조회_테스트() {
+        // given
+        Mission firstMission = id_없는_미션_생성();
+        Mission secondMission = id_없는_미션_생성();
+        Mission thirdMission = id_없는_미션_생성();
+
+        missionRepository.save(firstMission);
+        missionRepository.save(secondMission);
+        missionRepository.save(thirdMission);
+        missionProgressJpaRepository.save(
+            MissionProgress.of(DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_CHALLENGER_ID));
+        missionProgressJpaRepository.save(
+            MissionProgress.of(DEFAULT_GOAL, 2L, DEFAULT_CHALLENGER_ID));
+
+        // when
+        List<CurrentProgress> progress = queryDslRepository.findAll();
+
+        // then
+        assertThat(progress.size()).isEqualTo(2);
     }
 }
