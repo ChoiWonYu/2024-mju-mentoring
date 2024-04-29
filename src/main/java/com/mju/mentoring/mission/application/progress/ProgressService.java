@@ -2,23 +2,26 @@ package com.mju.mentoring.mission.application.progress;
 
 import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
+import com.mju.mentoring.mission.application.progress.dto.ProgressResponse;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
 import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
 import com.mju.mentoring.mission.exception.exceptions.AlreadyChallengeMission;
-import java.util.Optional;
+import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ProgressService {
 
     private final MissionProgressRepository missionProgressRepository;
 
     @Transactional
     public void challengeMission(final Long challengerId, final Long missionId, final Long goal) {
-        if(missionProgressRepository.hasChallengedMission(challengerId, missionId)){
+        if (missionProgressRepository.hasChallengedMission(challengerId, missionId)) {
             throw new AlreadyChallengeMission();
         }
 
@@ -30,5 +33,12 @@ public class ProgressService {
         final ResourceType resourceType) {
         missionProgressRepository.findByChallengeIdAndType(
             challengerId, getOperateType, resourceType).ifPresent(MissionProgress::increaseCount);
+    }
+
+    public List<ProgressResponse> findAll() {
+        List<CurrentProgress> progress = missionProgressRepository.findAll();
+        return progress.stream()
+            .map(CurrentProgress::toResponse)
+            .toList();
     }
 }
