@@ -4,6 +4,8 @@ import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
 import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
+import com.mju.mentoring.mission.domain.progress.ProgressStatus;
+import com.mju.mentoring.mission.domain.progress.RewardStatus;
 import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +18,8 @@ public class FakeMissionProgressRepository implements MissionProgressRepository 
     private Long id = 1L;
 
     @Override
-    public List<CurrentProgress> findAll() {
+    public List<CurrentProgress> findAll(final ProgressStatus progressStatus,
+        final RewardStatus rewardStatus) {
         return null;
     }
 
@@ -62,6 +65,6 @@ public class FakeMissionProgressRepository implements MissionProgressRepository 
             .map(key -> db.get(key))
             .anyMatch(
                 progress -> progress.getMissionId().equals(missionId)
-                        && progress.getChallengerId().equals(challengerId));
+                    && progress.getChallengerId().equals(challengerId));
     }
 }

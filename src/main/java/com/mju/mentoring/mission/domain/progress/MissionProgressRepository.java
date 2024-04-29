@@ -8,7 +8,8 @@ import java.util.Optional;
 
 public interface MissionProgressRepository {
 
-    List<CurrentProgress> findAll();
+    List<CurrentProgress> findAll(
+        final ProgressStatus progressStatus, final RewardStatus rewardStatus);
 
     Optional<MissionProgress> findById(final Long id);
 

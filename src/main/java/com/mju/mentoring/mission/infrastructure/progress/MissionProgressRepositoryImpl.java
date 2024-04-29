@@ -4,6 +4,8 @@ import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
 import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
+import com.mju.mentoring.mission.domain.progress.ProgressStatus;
+import com.mju.mentoring.mission.domain.progress.RewardStatus;
 import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
 import java.util.List;
 import java.util.Optional;
@@ -18,8 +20,9 @@ public class MissionProgressRepositoryImpl implements MissionProgressRepository 
     private final MissionProgressQueryDslRepository queryDslRepository;
 
     @Override
-    public List<CurrentProgress> findAll() {
-        return queryDslRepository.findAll();
+    public List<CurrentProgress> findAll(
+        final ProgressStatus progressStatus, final RewardStatus rewardStatus) {
+        return queryDslRepository.findAll(progressStatus, rewardStatus);
     }
 
     @Override
