@@ -1,4 +1,4 @@
-package com.mju.mentoring.ui.progress.dto;
+package com.mju.mentoring.mission.ui.progress.dto;
 
 import com.mju.mentoring.mission.application.progress.dto.ProgressResponse;
 import java.util.List;

@@ -5,6 +5,8 @@ import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.application.progress.dto.ProgressResponse;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
 import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
+import com.mju.mentoring.mission.domain.progress.ProgressStatus;
+import com.mju.mentoring.mission.domain.progress.RewardStatus;
 import com.mju.mentoring.mission.exception.exceptions.AlreadyChallengeMission;
 import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
 import java.util.List;
@@ -35,8 +37,10 @@ public class ProgressService {
             challengerId, getOperateType, resourceType).ifPresent(MissionProgress::increaseCount);
     }
 
-    public List<ProgressResponse> findAll() {
-        List<CurrentProgress> progress = missionProgressRepository.findAll();
+    public List<ProgressResponse> findAll(
+        final ProgressStatus progressStatus, final RewardStatus rewardStatus) {
+        List<CurrentProgress> progress = missionProgressRepository.findAll(
+            progressStatus, rewardStatus);
         return progress.stream()
             .map(CurrentProgress::toResponse)
             .toList();
