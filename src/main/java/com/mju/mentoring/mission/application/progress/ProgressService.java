@@ -8,6 +8,7 @@ import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
 import com.mju.mentoring.mission.domain.progress.ProgressStatus;
 import com.mju.mentoring.mission.domain.progress.RewardStatus;
 import com.mju.mentoring.mission.exception.exceptions.AlreadyChallengeMission;
+import com.mju.mentoring.mission.exception.exceptions.NotFoundProgressException;
 import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +46,16 @@ public class ProgressService {
         return progress.stream()
             .map(CurrentProgress::toResponse)
             .toList();
+    }
+
+    @Transactional
+    public void receiveReward(final Long id) {
+        MissionProgress progress = findById(id);
+        progress.receiveReward();
+    }
+
+    private MissionProgress findById(final Long id) {
+        return missionProgressRepository.findById(id)
+            .orElseThrow(() -> new NotFoundProgressException(id));
     }
 }
