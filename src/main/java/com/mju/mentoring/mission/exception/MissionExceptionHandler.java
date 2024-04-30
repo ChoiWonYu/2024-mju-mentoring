@@ -1,11 +1,12 @@
 package com.mju.mentoring.mission.exception;
 
 import com.mju.mentoring.mission.exception.exceptions.NotFoundMissionException;
+import com.mju.mentoring.mission.exception.exceptions.WrongProgressStatusException;
+import com.mju.mentoring.mission.exception.exceptions.WrongRewardStatusException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
 public class MissionExceptionHandler {
@@ -16,9 +17,16 @@ public class MissionExceptionHandler {
         return getResponseWithStatus(HttpStatus.NOT_FOUND, exception);
     }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<String> handleConversionFailedException(
-        final MethodArgumentTypeMismatchException exception
+    @ExceptionHandler(WrongProgressStatusException.class)
+    public ResponseEntity<String> handleWrongProgressStatusException(
+        final WrongProgressStatusException exception
+    ) {
+        return getResponseWithStatus(HttpStatus.BAD_REQUEST, exception);
+    }
+
+    @ExceptionHandler(WrongRewardStatusException.class)
+    public ResponseEntity<String> handleWrongRewardStatusException(
+        final WrongRewardStatusException exception
     ) {
         return getResponseWithStatus(HttpStatus.BAD_REQUEST, exception);
     }
