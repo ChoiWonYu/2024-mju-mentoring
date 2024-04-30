@@ -2,6 +2,7 @@ package com.mju.mentoring.mission.fixture;
 
 import static com.mju.mentoring.mission.domain.progress.ProgressStatus.COMPLETED;
 import static com.mju.mentoring.mission.domain.progress.ProgressStatus.IN_PROGRESS;
+import static com.mju.mentoring.mission.domain.progress.RewardStatus.NOT_AVAILABLE;
 import static com.mju.mentoring.mission.domain.progress.RewardStatus.RECEIVED;
 import static com.mju.mentoring.mission.domain.progress.RewardStatus.WAITING;
 
@@ -28,6 +29,7 @@ public class ProgressFixture {
             .challengerId(1L)
             .missionId(1L)
             .currentInfo(CurrentInfo.builder()
+                .rewardStatus(NOT_AVAILABLE)
                 .progressInfo(ProgressInfo.builder()
                     .progressStatus(IN_PROGRESS)
                     .build())
@@ -41,6 +43,9 @@ public class ProgressFixture {
             .missionId(1L)
             .currentInfo(CurrentInfo.builder()
                 .rewardStatus(WAITING)
+                .progressInfo(ProgressInfo.builder()
+                    .progressStatus(COMPLETED)
+                    .build())
                 .build())
             .build();
     }
