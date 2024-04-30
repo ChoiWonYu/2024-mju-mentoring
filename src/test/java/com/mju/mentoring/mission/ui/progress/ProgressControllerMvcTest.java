@@ -18,7 +18,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 public class ProgressControllerMvcTest extends BaseControllerWebMvcTest {
 
@@ -70,12 +69,20 @@ public class ProgressControllerMvcTest extends BaseControllerWebMvcTest {
     }
 
     @Test
-    void enum_변환_실패_테스트() throws Exception {
+    void reward_status_변환_실패_테스트() throws Exception {
         // when & then
         mockMvc.perform(get("/progress?rewardStatus=OTHER")
                 .header(HEADER_NAME, TOKEN_FORMAT)
             )
-            .andExpect(result -> assertThat(result.getResolvedException())
-                .isInstanceOf(MethodArgumentTypeMismatchException.class));
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void progress_status_변환_실패_테스트() throws Exception {
+        // when & then
+        mockMvc.perform(get("/progress?progressStatus=OTHER")
+                .header(HEADER_NAME, TOKEN_FORMAT)
+            )
+            .andExpect(status().isBadRequest());
     }
 }
