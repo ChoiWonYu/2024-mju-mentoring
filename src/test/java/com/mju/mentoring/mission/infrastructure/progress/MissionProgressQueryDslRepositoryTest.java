@@ -35,6 +35,7 @@ class MissionProgressQueryDslRepositoryTest {
     private final static Long DEFAULT_MISSION_ID = 1L;
     private final static Long DEFAULT_CHALLENGER_ID = 1L;
     private final static Long DEFAULT_GOAL = 5L;
+    private final static Long DEFAULT_REWARD = 1000L;
     private static final ResourceType DEFAULT_RESOURCE_TYPE = ResourceType.BOARD;
     private static final OperateType DEFAULT_OPERATE_TYPE = OperateType.CREATE;
 
@@ -52,7 +53,8 @@ class MissionProgressQueryDslRepositoryTest {
         // given
         missionRepository.save(id_없는_미션_생성());
         missionProgressJpaRepository.save(
-            MissionProgress.of(DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_CHALLENGER_ID));
+            MissionProgress.of(
+                DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_REWARD, DEFAULT_CHALLENGER_ID));
 
         // when
         Optional<MissionProgress> progress = queryDslRepository.findByChallengeIdAndType(
@@ -66,7 +68,8 @@ class MissionProgressQueryDslRepositoryTest {
     void 도전자가_이미_미션을_수행하고_있는지_조회_테스트() {
         // given
         missionProgressJpaRepository.save(
-            MissionProgress.of(DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_CHALLENGER_ID));
+            MissionProgress.of(
+                DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_REWARD, DEFAULT_CHALLENGER_ID));
 
         // when & then
         assertSoftly(softly -> {
@@ -90,9 +93,10 @@ class MissionProgressQueryDslRepositoryTest {
         missionRepository.save(secondMission);
         missionRepository.save(thirdMission);
         missionProgressJpaRepository.save(
-            MissionProgress.of(DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_CHALLENGER_ID));
+            MissionProgress.of(
+                DEFAULT_GOAL, DEFAULT_MISSION_ID, DEFAULT_REWARD, DEFAULT_CHALLENGER_ID));
         missionProgressJpaRepository.save(
-            MissionProgress.of(DEFAULT_GOAL, 2L, DEFAULT_CHALLENGER_ID));
+            MissionProgress.of(DEFAULT_GOAL, 2L, DEFAULT_REWARD, DEFAULT_CHALLENGER_ID));
 
         // when
         List<CurrentProgress> progress = queryDslRepository.findAll(null, null);

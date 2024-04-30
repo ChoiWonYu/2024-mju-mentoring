@@ -22,12 +22,13 @@ public class ProgressService {
     private final MissionProgressRepository missionProgressRepository;
 
     @Transactional
-    public void challengeMission(final Long challengerId, final Long missionId, final Long goal) {
+    public void challengeMission(
+        final Long challengerId, final Long missionId, final Long reward, final Long goal) {
         if (missionProgressRepository.hasChallengedMission(challengerId, missionId)) {
             throw new AlreadyChallengeMission();
         }
 
-        missionProgressRepository.save(MissionProgress.of(goal, missionId, challengerId));
+        missionProgressRepository.save(MissionProgress.of(goal, missionId, reward, challengerId));
     }
 
     @Transactional
