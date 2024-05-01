@@ -69,9 +69,13 @@ public class ProgressService {
         progress.forEach(this::raiseRewardReceivedEvent);
     }
 
-    private MissionProgress findById(final Long id) {
-        return missionProgressRepository.findById(id)
+    private MissionProgress findById(final Long challengerId, final Long id) {
+        MissionProgress progress = missionProgressRepository.findById(id)
             .orElseThrow(() -> new NotFoundProgressException(id));
+        if (!progress.getChallengerId().equals(challengerId)) {
+            throw new InvalidChallengerException();
+        }
+        return progress;
     }
 
     private void raiseRewardReceivedEvent(final MissionProgress progress) {

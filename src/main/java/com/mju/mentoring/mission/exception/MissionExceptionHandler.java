@@ -39,6 +39,13 @@ public class MissionExceptionHandler {
         return getResponseWithStatus(HttpStatus.BAD_REQUEST, exception);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<String> handleInvalidChallengerException(
+        final InvalidChallengerException exception
+    ) {
+        return getResponseWithStatus(HttpStatus.BAD_REQUEST, exception);
+    }
+
     private ResponseEntity<String> getResponseWithStatus(final HttpStatus httpStatus,
         final Exception exception) {
         return ResponseEntity.status(httpStatus)

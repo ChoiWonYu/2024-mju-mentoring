@@ -33,14 +33,15 @@ public class ProgressController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Void> receiveReward(@PathVariable("id") final Long id) {
-        progressService.receiveReward(id);
+    public ResponseEntity<Void> receiveReward(
+        @AuthInformation final Long challengerId, @PathVariable("id") final Long id) {
+        progressService.receiveReward(challengerId, id);
         return ResponseEntity.ok()
             .build();
     }
 
     @PostMapping
-    public ResponseEntity<Void> receiveAllRewards(@AuthInformation Long challengerId) {
+    public ResponseEntity<Void> receiveAllRewards(@AuthInformation final Long challengerId) {
         progressService.receiveAllRewards(challengerId);
         return ResponseEntity.ok()
             .build();
