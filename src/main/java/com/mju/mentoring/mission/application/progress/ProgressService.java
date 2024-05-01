@@ -2,10 +2,12 @@ package com.mju.mentoring.mission.application.progress;
 
 import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
+import com.mju.mentoring.global.event.Events;
 import com.mju.mentoring.mission.application.progress.dto.ProgressResponse;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
 import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
 import com.mju.mentoring.mission.domain.progress.ProgressStatus;
+import com.mju.mentoring.mission.domain.progress.RewardReceivedEvent;
 import com.mju.mentoring.mission.domain.progress.RewardStatus;
 import com.mju.mentoring.mission.exception.exceptions.AlreadyChallengeMission;
 import com.mju.mentoring.mission.exception.exceptions.NotFoundProgressException;
@@ -52,6 +54,7 @@ public class ProgressService {
     public void receiveReward(final Long id) {
         MissionProgress progress = findById(id);
         progress.receiveReward();
+        raiseRewardReceivedEvent(progress);
     }
 
     @Transactional
@@ -59,10 +62,15 @@ public class ProgressService {
         List<MissionProgress> progress = missionProgressRepository.findRewardWaitingProgress(
             challengerId);
         progress.forEach(MissionProgress::receiveReward);
+        progress.forEach(this::raiseRewardReceivedEvent);
     }
 
     private MissionProgress findById(final Long id) {
         return missionProgressRepository.findById(id)
             .orElseThrow(() -> new NotFoundProgressException(id));
+    }
+
+    private void raiseRewardReceivedEvent(final MissionProgress progress) {
+        Events.raise(new RewardReceivedEvent(progress.getChallengerId(), progress.getReward()));
     }
 }
