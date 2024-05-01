@@ -51,7 +51,9 @@ public class MissionProgressQueryDslRepository {
                 mission.title,
                 missionProgress.currentInfo.currentCount,
                 missionProgress.currentInfo.progressInfo.goal,
-                missionProgress.currentInfo.progressInfo.progress
+                missionProgress.currentInfo.progressInfo.progress,
+                missionProgress.currentInfo.progressInfo.progressStatus,
+                missionProgress.currentInfo.rewardStatus
             ))
             .from(missionProgress)
             .innerJoin(mission)
