@@ -21,6 +21,7 @@ public class MissionService {
         return missionRepository.findAll();
     }
 
+    @Transactional
     public void challengeMission(final Long challengerId, final Long missionId) {
         missionRepository.findById(missionId)
             .ifPresentOrElse(mission -> Events.raise(
