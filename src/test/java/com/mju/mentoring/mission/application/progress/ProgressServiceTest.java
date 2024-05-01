@@ -11,6 +11,7 @@ import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
 import com.mju.mentoring.mission.domain.progress.RewardStatus;
 import com.mju.mentoring.mission.exception.exceptions.AlreadyChallengeMission;
 import com.mju.mentoring.mission.exception.exceptions.CannotReceiveRewardException;
+import com.mju.mentoring.mission.exception.exceptions.NoCompletedProgressException;
 import com.mju.mentoring.mission.fake.FakeMissionProgressRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -84,5 +85,12 @@ class ProgressServiceTest {
         assertThatThrownBy(
             () -> progressService.receiveReward(FIRST_PROGRESS_ID))
             .isInstanceOf(CannotReceiveRewardException.class);
+    }
+
+    @Test
+    void 전체_보상_수령_예외_테스트() {
+        // when & then
+        assertThatThrownBy(() -> progressService.receiveAllRewards(DEFAULT_CHALLENGER_ID))
+            .isInstanceOf(NoCompletedProgressException.class);
     }
 }
