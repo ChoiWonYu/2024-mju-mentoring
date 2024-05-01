@@ -10,6 +10,7 @@ import com.mju.mentoring.mission.domain.progress.ProgressStatus;
 import com.mju.mentoring.mission.domain.progress.RewardReceivedEvent;
 import com.mju.mentoring.mission.domain.progress.RewardStatus;
 import com.mju.mentoring.mission.exception.exceptions.AlreadyChallengeMission;
+import com.mju.mentoring.mission.exception.exceptions.NoCompletedProgressException;
 import com.mju.mentoring.mission.exception.exceptions.NotFoundProgressException;
 import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
 import java.util.List;
@@ -58,9 +59,12 @@ public class ProgressService {
     }
 
     @Transactional
-    public void receiveALlRewards(final Long challengerId) {
+    public void receiveAllRewards(final Long challengerId) {
         List<MissionProgress> progress = missionProgressRepository.findRewardWaitingProgress(
             challengerId);
+        if (progress.isEmpty()) {
+            throw new NoCompletedProgressException();
+        }
         progress.forEach(MissionProgress::receiveReward);
         progress.forEach(this::raiseRewardReceivedEvent);
     }

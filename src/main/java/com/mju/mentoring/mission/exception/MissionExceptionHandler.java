@@ -1,5 +1,6 @@
 package com.mju.mentoring.mission.exception;
 
+import com.mju.mentoring.mission.exception.exceptions.NoCompletedProgressException;
 import com.mju.mentoring.mission.exception.exceptions.NotFoundMissionException;
 import com.mju.mentoring.mission.exception.exceptions.WrongProgressStatusException;
 import com.mju.mentoring.mission.exception.exceptions.WrongRewardStatusException;
@@ -27,6 +28,13 @@ public class MissionExceptionHandler {
     @ExceptionHandler(WrongRewardStatusException.class)
     public ResponseEntity<String> handleWrongRewardStatusException(
         final WrongRewardStatusException exception
+    ) {
+        return getResponseWithStatus(HttpStatus.BAD_REQUEST, exception);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleNoCompletedProgress(
+        final NoCompletedProgressException exception
     ) {
         return getResponseWithStatus(HttpStatus.BAD_REQUEST, exception);
     }

@@ -41,7 +41,7 @@ public class ProgressController {
 
     @PostMapping
     public ResponseEntity<Void> receiveAllRewards(@AuthInformation Long challengerId) {
-        progressService.receiveALlRewards(challengerId);
+        progressService.receiveAllRewards(challengerId);
         return ResponseEntity.ok()
             .build();
     }
