@@ -156,4 +156,26 @@ class MissionProgressQueryDslRepositoryTest {
         // then
         assertThat(progress.isEmpty()).isFalse();
     }
+
+    @Test
+    void 보상_수령_가능한_모든_보상_수령_테스트() {
+        // given
+        missionRepository.save(id_없는_미션_생성());
+        missionProgressJpaRepository.save(id_없는_보상_수령_가능한_진행도_생성());
+        missionRepository.save(id_없는_미션_생성());
+        missionProgressJpaRepository.save(id_없는_보상_수령_가능한_진행도_생성());
+        missionRepository.save(id_없는_미션_생성());
+        missionProgressJpaRepository.save(id_없는_진행중인_진행도_생성());
+
+        // when
+        List<MissionProgress> waitingProgress = queryDslRepository.findRewardWaitingProgress(
+            DEFAULT_CHALLENGER_ID);
+
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(waitingProgress.size()).isEqualTo(2);
+            softly.assertThat(waitingProgress.get(0).getId()).isEqualTo(1L);
+            softly.assertThat(waitingProgress.get(1).getId()).isEqualTo(2L);
+        });
+    }
 }
