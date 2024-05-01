@@ -1,5 +1,6 @@
 package com.mju.mentoring.mission.ui.progress;
 
+import com.mju.mentoring.member.ui.auth.support.AuthInformation;
 import com.mju.mentoring.mission.application.progress.ProgressService;
 import com.mju.mentoring.mission.application.progress.dto.ProgressResponse;
 import com.mju.mentoring.mission.domain.progress.ProgressStatus;
@@ -38,8 +39,9 @@ public class ProgressController {
             .build();
     }
 
-    @PostMapping()
-    public ResponseEntity<Void> receiveAll() {
+    @PostMapping
+    public ResponseEntity<Void> receiveAllRewards(@AuthInformation Long challengerId) {
+        progressService.receiveALlRewards(challengerId);
         return ResponseEntity.ok()
             .build();
     }
