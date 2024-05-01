@@ -20,8 +20,8 @@ public class FakeMissionProgressRepository implements MissionProgressRepository 
     private Long id = 1L;
 
     @Override
-    public List<CurrentProgress> findAll(final ProgressStatus progressStatus,
-        final RewardStatus rewardStatus) {
+    public List<CurrentProgress> findAll( final Long challengerId,
+        final ProgressStatus progressStatus, final RewardStatus rewardStatus) {
         return null;
     }
 

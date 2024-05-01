@@ -99,7 +99,8 @@ class MissionProgressQueryDslRepositoryTest {
             MissionProgress.of(DEFAULT_GOAL, 2L, DEFAULT_REWARD, DEFAULT_CHALLENGER_ID));
 
         // when
-        List<CurrentProgress> progress = queryDslRepository.findAll(null, null);
+        List<CurrentProgress> progress = queryDslRepository.findAll(
+            DEFAULT_CHALLENGER_ID, null, null);
 
         // then
         assertThat(progress.size()).isEqualTo(2);
@@ -112,7 +113,8 @@ class MissionProgressQueryDslRepositoryTest {
         missionProgressJpaRepository.save(id_없는_완료된_진행도_생성());
 
         // when
-        List<CurrentProgress> progress = queryDslRepository.findAll(COMPLETED, null);
+        List<CurrentProgress> progress = queryDslRepository.findAll(
+            DEFAULT_CHALLENGER_ID, COMPLETED, null);
 
         // then
         assertThat(progress.isEmpty()).isFalse();
@@ -125,7 +127,8 @@ class MissionProgressQueryDslRepositoryTest {
         missionProgressJpaRepository.save(id_없는_진행중인_진행도_생성());
 
         // when
-        List<CurrentProgress> progress = queryDslRepository.findAll(IN_PROGRESS, null);
+        List<CurrentProgress> progress = queryDslRepository.findAll(
+            DEFAULT_CHALLENGER_ID, IN_PROGRESS, null);
 
         // then
         assertThat(progress.isEmpty()).isFalse();
@@ -138,7 +141,8 @@ class MissionProgressQueryDslRepositoryTest {
         missionProgressJpaRepository.save(id_없는_보상_수령_가능한_진행도_생성());
 
         // when
-        List<CurrentProgress> progress = queryDslRepository.findAll(null, WAITING);
+        List<CurrentProgress> progress = queryDslRepository.findAll(
+            DEFAULT_CHALLENGER_ID, null, WAITING);
 
         // then
         assertThat(progress.isEmpty()).isFalse();
@@ -151,7 +155,8 @@ class MissionProgressQueryDslRepositoryTest {
         missionProgressJpaRepository.save(id_없는_보상_수령한_진행도_생성());
 
         // when
-        List<CurrentProgress> progress = queryDslRepository.findAll(null, RECEIVED);
+        List<CurrentProgress> progress = queryDslRepository.findAll(
+            DEFAULT_CHALLENGER_ID, null, RECEIVED);
 
         // then
         assertThat(progress.isEmpty()).isFalse();

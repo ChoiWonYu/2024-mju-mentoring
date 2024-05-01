@@ -25,10 +25,11 @@ public class ProgressController {
 
     @GetMapping
     public ResponseEntity<ProgressResponses> findAll(
+        @AuthInformation final Long challengerId,
         @RequestParam(name = "progressStatus", required = false) final ProgressStatus progressStatus,
         @RequestParam(name = "rewardStatus", required = false) final RewardStatus rewardStatus
     ) {
-        List<ProgressResponse> response = progressService.findAll(progressStatus, rewardStatus);
+        List<ProgressResponse> response = progressService.findAll(challengerId, progressStatus, rewardStatus);
         return ResponseEntity.ok(ProgressResponses.of(response));
     }
 

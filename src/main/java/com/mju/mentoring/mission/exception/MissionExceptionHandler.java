@@ -1,5 +1,6 @@
 package com.mju.mentoring.mission.exception;
 
+import com.mju.mentoring.mission.exception.exceptions.InvalidChallengerException;
 import com.mju.mentoring.mission.exception.exceptions.NoCompletedProgressException;
 import com.mju.mentoring.mission.exception.exceptions.NotFoundMissionException;
 import com.mju.mentoring.mission.exception.exceptions.WrongProgressStatusException;

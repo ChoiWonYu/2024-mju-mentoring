@@ -10,6 +10,7 @@ import com.mju.mentoring.mission.domain.progress.ProgressStatus;
 import com.mju.mentoring.mission.domain.progress.RewardReceivedEvent;
 import com.mju.mentoring.mission.domain.progress.RewardStatus;
 import com.mju.mentoring.mission.exception.exceptions.AlreadyChallengeMission;
+import com.mju.mentoring.mission.exception.exceptions.InvalidChallengerException;
 import com.mju.mentoring.mission.exception.exceptions.NoCompletedProgressException;
 import com.mju.mentoring.mission.exception.exceptions.NotFoundProgressException;
 import com.mju.mentoring.mission.infrastructure.progress.dto.CurrentProgress;
@@ -42,18 +43,18 @@ public class ProgressService {
             challengerId, getOperateType, resourceType).ifPresent(MissionProgress::increaseCount);
     }
 
-    public List<ProgressResponse> findAll(
+    public List<ProgressResponse> findAll(final Long challengerId,
         final ProgressStatus progressStatus, final RewardStatus rewardStatus) {
         List<CurrentProgress> progress = missionProgressRepository.findAll(
-            progressStatus, rewardStatus);
+            challengerId, progressStatus, rewardStatus);
         return progress.stream()
             .map(CurrentProgress::toResponse)
             .toList();
     }
 
     @Transactional
-    public void receiveReward(final Long id) {
-        MissionProgress progress = findById(id);
+    public void receiveReward(final Long challengerId, final Long id) {
+        MissionProgress progress = findById(challengerId, id);
         progress.receiveReward();
         raiseRewardReceivedEvent(progress);
     }

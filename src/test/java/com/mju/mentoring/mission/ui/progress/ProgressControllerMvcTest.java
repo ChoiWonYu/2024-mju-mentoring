@@ -39,7 +39,8 @@ public class ProgressControllerMvcTest extends BaseControllerWebMvcTest {
     @Test
     void 진행도_전체_조회_미션_상태_테스트() throws Exception {
         // given
-        given(progressService.findAll(progressStatusArgumentCaptor.capture(), any()))
+        given(progressService.findAll(
+            any(), progressStatusArgumentCaptor.capture(), any()))
             .willReturn(List.of());
 
         // when
@@ -55,7 +56,8 @@ public class ProgressControllerMvcTest extends BaseControllerWebMvcTest {
     @Test
     void 진행도_전체_조회_보상_상태_테스트() throws Exception {
         // given
-        given(progressService.findAll(any(), rewardStatusArgumentCaptor.capture()))
+        given(progressService.findAll(
+            any(), any(), rewardStatusArgumentCaptor.capture()))
             .willReturn(List.of());
 
         // when

@@ -44,7 +44,7 @@ public class MissionProgressQueryDslRepository {
             .fetchFirst() != null;
     }
 
-    public List<CurrentProgress> findAll(
+    public List<CurrentProgress> findAll(final Long challengerId,
         final ProgressStatus progressStatus, final RewardStatus rewardStatus) {
         return queryFactory.select(Projections.constructor(
                 CurrentProgress.class,
@@ -56,7 +56,8 @@ public class MissionProgressQueryDslRepository {
             .from(missionProgress)
             .innerJoin(mission)
             .on(missionProgress.missionId.eq(mission.id))
-            .where(sameProgressStatus(progressStatus), sameRewardStatus(rewardStatus))
+            .where(missionProgress.challengerId.eq(challengerId),
+                sameProgressStatus(progressStatus), sameRewardStatus(rewardStatus))
             .fetchJoin()
             .fetch();
     }

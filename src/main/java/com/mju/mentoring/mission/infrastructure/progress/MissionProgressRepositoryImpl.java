@@ -20,9 +20,9 @@ public class MissionProgressRepositoryImpl implements MissionProgressRepository 
     private final MissionProgressQueryDslRepository queryDslRepository;
 
     @Override
-    public List<CurrentProgress> findAll(
+    public List<CurrentProgress> findAll(final Long challengerId,
         final ProgressStatus progressStatus, final RewardStatus rewardStatus) {
-        return queryDslRepository.findAll(progressStatus, rewardStatus);
+        return queryDslRepository.findAll(challengerId, progressStatus, rewardStatus);
     }
 
     @Override
