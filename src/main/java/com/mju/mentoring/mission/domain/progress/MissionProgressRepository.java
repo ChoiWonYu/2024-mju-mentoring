@@ -22,4 +22,6 @@ public interface MissionProgressRepository {
         final OperateType getOperateType, final ResourceType resourceType);
 
     boolean hasChallengedMission(final Long challengerId, final Long missionId);
+
+    List<MissionProgress> findRewardWaitingProgress(Long challengerId);
 }

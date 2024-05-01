@@ -51,4 +51,9 @@ public class MissionProgressRepositoryImpl implements MissionProgressRepository 
     public boolean hasChallengedMission(final Long challengerId, final Long missionId) {
         return queryDslRepository.hasAlreadyChallengedMission(challengerId, missionId);
     }
+
+    @Override
+    public List<MissionProgress> findRewardWaitingProgress(final Long challengerId) {
+        return queryDslRepository.findRewardWaitingProgress(challengerId);
+    }
 }

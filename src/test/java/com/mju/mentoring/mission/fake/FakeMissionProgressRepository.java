@@ -1,5 +1,7 @@
 package com.mju.mentoring.mission.fake;
 
+import static com.mju.mentoring.mission.domain.progress.RewardStatus.WAITING;
+
 import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
 import com.mju.mentoring.mission.domain.progress.MissionProgress;
@@ -66,5 +68,15 @@ public class FakeMissionProgressRepository implements MissionProgressRepository 
             .anyMatch(
                 progress -> progress.getMissionId().equals(missionId)
                     && progress.getChallengerId().equals(challengerId));
+    }
+
+    @Override
+    public List<MissionProgress> findRewardWaitingProgress(final Long challengerId) {
+        return db.keySet().stream()
+            .map(key -> db.get(key))
+            .filter(progress ->
+                progress.getCurrentInfo().getRewardStatus().equals(WAITING)
+            )
+            .toList();
     }
 }

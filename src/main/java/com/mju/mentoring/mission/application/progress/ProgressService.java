@@ -54,6 +54,13 @@ public class ProgressService {
         progress.receiveReward();
     }
 
+    @Transactional
+    public void receiveALlRewards(final Long challengerId) {
+        List<MissionProgress> progress = missionProgressRepository.findRewardWaitingProgress(
+            challengerId);
+        progress.forEach(MissionProgress::receiveReward);
+    }
+
     private MissionProgress findById(final Long id) {
         return missionProgressRepository.findById(id)
             .orElseThrow(() -> new NotFoundProgressException(id));

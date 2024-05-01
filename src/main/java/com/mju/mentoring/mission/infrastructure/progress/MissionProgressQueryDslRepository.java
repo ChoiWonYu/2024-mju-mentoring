@@ -2,6 +2,7 @@ package com.mju.mentoring.mission.infrastructure.progress;
 
 import static com.mju.mentoring.mission.domain.mission.QMission.mission;
 import static com.mju.mentoring.mission.domain.progress.QMissionProgress.missionProgress;
+import static com.mju.mentoring.mission.domain.progress.RewardStatus.WAITING;
 
 import com.mju.mentoring.global.domain.OperateType;
 import com.mju.mentoring.global.domain.ResourceType;
@@ -57,6 +58,13 @@ public class MissionProgressQueryDslRepository {
             .on(missionProgress.missionId.eq(mission.id))
             .where(sameProgressStatus(progressStatus), sameRewardStatus(rewardStatus))
             .fetchJoin()
+            .fetch();
+    }
+
+    public List<MissionProgress> findRewardWaitingProgress(final Long challengerId) {
+        return queryFactory.selectFrom(missionProgress)
+            .where(missionProgress.challengerId.eq(challengerId),
+                missionProgress.currentInfo.rewardStatus.eq(WAITING))
             .fetch();
     }
 
