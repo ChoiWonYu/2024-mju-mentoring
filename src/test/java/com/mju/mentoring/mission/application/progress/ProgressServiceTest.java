@@ -11,6 +11,7 @@ import com.mju.mentoring.mission.domain.progress.MissionProgressRepository;
 import com.mju.mentoring.mission.domain.progress.RewardStatus;
 import com.mju.mentoring.mission.exception.exceptions.AlreadyChallengeMission;
 import com.mju.mentoring.mission.exception.exceptions.CannotReceiveRewardException;
+import com.mju.mentoring.mission.exception.exceptions.InvalidChallengerException;
 import com.mju.mentoring.mission.exception.exceptions.NoCompletedProgressException;
 import com.mju.mentoring.mission.fake.FakeMissionProgressRepository;
 import java.util.Optional;
@@ -64,7 +65,7 @@ class ProgressServiceTest {
         missionProgressRepository.save(id_없는_보상_수령_가능한_진행도_생성());
 
         // when
-        progressService.receiveReward(FIRST_PROGRESS_ID);
+        progressService.receiveReward(DEFAULT_CHALLENGER_ID, FIRST_PROGRESS_ID);
 
         // then
         Optional<MissionProgress> progress = missionProgressRepository.findById(FIRST_PROGRESS_ID);
@@ -83,8 +84,19 @@ class ProgressServiceTest {
 
         // when & then
         assertThatThrownBy(
-            () -> progressService.receiveReward(FIRST_PROGRESS_ID))
+            () -> progressService.receiveReward(DEFAULT_CHALLENGER_ID, FIRST_PROGRESS_ID))
             .isInstanceOf(CannotReceiveRewardException.class);
+    }
+
+    @Test
+    void 잘못된_도전자_보상_수령_예외_테스트() {
+        // given
+        missionProgressRepository.save(id_없는_보상_수령_가능한_진행도_생성());
+
+        // when & then
+        assertThatThrownBy(
+            () -> progressService.receiveReward(2L, FIRST_PROGRESS_ID))
+            .isInstanceOf(InvalidChallengerException.class);
     }
 
     @Test
